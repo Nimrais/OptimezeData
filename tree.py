@@ -4,17 +4,26 @@ maxnum = 100000000000000000000000000000000000000000000000000000000000000000
 
 
 #
+'''
+in this class. I relese Tree as orgraph,where nodes is list like this elem where
+elem[0]`s data, which node consists
+elem[1]`s number, which vertex takes when it is added to Tree
+elem[2]`s list os sons of vertex, list of numbers which uses like ref on another node
+'''
 class Tree (object):
     def __init__(self):
         self._color = set ()  # nodes that take part in out
-        self._nodes = []
-        self._len = 0
-        self._colored = []
+        self._nodes = [] # list of all nodes
+        self._len = 0 #number of nodes
+        self._colored = [] # colored list
         self._heads = []
+        #'''our graph is composed, from different connects Componets => if we know ref on head of component we know all
+        #component
+        #'''
 
     def addVer(self, name):
-        node = [name, self._len, []]
-        self._len += 1
+        node = [name, self._len, []]#creates node
+        self._len += 1#
         self._nodes.append (node)
         return node[1]
 
@@ -28,6 +37,11 @@ class Tree (object):
         return str (self._nodes)
 
     def build(self, dic, father=None):
+        '''
+        We can see that this functions
+        updates Tree with information in a list
+        cause we have bijection Trees -> Dicts Dicts -> Trees
+        '''
         if (father == None):
             layer = list (dic.keys ())
             for name in layer:
@@ -81,7 +95,13 @@ class Tree (object):
     def heads(self):
         return self._heads
 
-    def componentBuildDict(self, i):  # Magic
+    def componentBuildDict(self, i):
+        '''
+        Really something like python magic 
+        we call creates in reccursive way
+        and after got list that based on Tree
+        That functions build dict of one compoent of Connectivty
+        '''
         if not (type(self.nodes ()[i][2]) == typeList):
             name = self.nodes ()[i][0]
             value = self.nodes ()[i][2]
@@ -93,6 +113,11 @@ class Tree (object):
             return {self.nodes ()[i][0]: out}
 
     def buildDict(self):
+        '''
+        If we have dicts for all commponet of connectivity
+        we can merge them and will take all dic cause our graph
+        is Forest
+        '''
         out = {}
         for i in self.heads():
             out.update (self.componentBuildDict(i))
